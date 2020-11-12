@@ -11,6 +11,7 @@
         "generateReducer": "./node_modules/.bin/reducer-gen --loglevel info --createReducerContext",
         "prepareForPublish": "npm run build && npm install --production && npm run cleanForPublish",
         "test": "npm run installPeerDependencies && jest",
+        "cleanForLinked": "node cleanForLinked.js",
         "cleanForPublish": "node cleanForPublish.js",
         "clean": "npm ci && node clean.js",
         "prebuild": "npm run clean",
