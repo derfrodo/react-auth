@@ -1,11 +1,7 @@
 import log from "loglevel";
-import React from "react";
-import {
-    authActionCreators,
-    IAuthService,
-    useAuthReducerContextDispatch,
-} from "..";
-import { useAuthReducerContext } from "../Auth";
+import React, { useState } from "react";
+import { authActionCreators, IAuthService } from "..";
+import { useAuthReducerContextDispatch } from "../Auth";
 import { DEFAULT_AUTH_PROVIDER_NAME } from "../constants";
 import { UserInfo } from "../interfaces/UserInfo";
 import {
@@ -26,9 +22,9 @@ export const useCreateStatefulAuthService = (
 ): ((
     authenticationSettings: AuthServiceOidcClientConfig | null | undefined
 ) => IAuthService | null | undefined) => {
-    const { state, dispatch } = useAuthReducerContext();
-    const { services } = state;
-    const currentService = services && services[provider];
+    const dispatch = useAuthReducerContextDispatch();
+    const [, setLastService] = useState<IAuthService | null | undefined>();
+
     return React.useCallback(
         (
             authenticationSettings:
@@ -36,17 +32,23 @@ export const useCreateStatefulAuthService = (
                 | null
                 | undefined
         ) => {
-            if (currentService) {
-                log.debug(
-                    `There is a service already initialized for provider "${provider}". We might want to dispose the current auth service`,
-                    { currentService }
-                );
-            }
+            const updateCurrentService = (
+                next: IAuthService | null | undefined
+            ) => (currentService: IAuthService | null | undefined) => {
+                if (currentService) {
+                    log.debug(
+                        `There is a service already initialized for provider "${provider}". We might want to dispose the current auth service`,
+                        { currentService }
+                    );
+                }
+                return next;
+            };
 
             if (
                 authenticationSettings === undefined ||
                 authenticationSettings === null
             ) {
+                setLastService(updateCurrentService(null));
                 dispatch(authActionCreators.setAuthService(provider, null));
                 dispatch(authActionCreators.setUser(provider, null));
                 return null;
@@ -68,6 +70,7 @@ export const useCreateStatefulAuthService = (
                         }
                     }
                 );
+                setLastService(updateCurrentService(service));
                 dispatch(authActionCreators.setAuthService(provider, service));
                 return service;
             }
