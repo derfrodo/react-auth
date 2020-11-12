@@ -46,7 +46,7 @@ export const useStatefulAuthService = (
                   ...(authService ? authService : {}),
                   getAccessToken: getAccessToken.current,
               };
-    }, []);
+    }, [authService]);
 };
 
 export default useStatefulAuthService;

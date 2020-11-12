@@ -12,9 +12,9 @@ export type AuthServiceOidcClientConfig = UserManagerSettings;
 
 export class AuthServiceOidcClient implements IAuthService {
     private _userManager: UserManager = {} as any;
-    private _isInitialized: boolean = false;
+    private _isInitialized = false;
 
-    private renewingSilently: boolean = false;
+    private renewingSilently = false;
 
     constructor(
         private _userManagerSettings: AuthServiceOidcClientConfig,
@@ -228,7 +228,7 @@ export class AuthServiceOidcClient implements IAuthService {
     }
 
     async getAccessToken(
-        forceRefresh: boolean = false
+        forceRefresh = false
     ): Promise<string | null> {
         if (forceRefresh) {
             try {

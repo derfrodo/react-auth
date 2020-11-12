@@ -9,6 +9,7 @@ import {
 import useStatefulAuthService from "../hooks/useStatefulAuthService";
 
 export const SilentAuthCallback: React.FC<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => any;
     children?: React.ReactNode;
 }> = ({ onError, children }) => {

@@ -62,6 +62,6 @@ export const useCreateStatefulAuthService = (
                 return service;
             }
         },
-        [dispatch, provider]
+        [dispatch, provider, reactToPossibleUserChange]
     );
 };

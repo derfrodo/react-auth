@@ -9,6 +9,7 @@ import useAuthState from "../hooks/useAuthState";
 import useStatefulAuthService from "../hooks/useStatefulAuthService";
 
 export const AuthPopupCallback: React.FC<{
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     onError: (error: any) => any;
     children?: React.ReactNode;
 }> = ({ onError, children }) => {
@@ -42,7 +43,7 @@ export const AuthPopupCallback: React.FC<{
                 onError(err);
             }
         })();
-    }, [dispatch, loggedIn, provider, redirectToStatePath, service]);
+    }, [dispatch, loggedIn, onError, provider, redirectToStatePath, service]);
 
     return <div>{children}</div>;
 };

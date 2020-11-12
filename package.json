@@ -7,7 +7,9 @@
     "type": "git",
     "url": "https://github.com/derfrodo/react-auth"
   },
-  "scripts": {},
+  "scripts": {
+    "lintlib": "eslint -c  ./lib/.eslintrc.json ./lib/src/**/*.{js,ts,tsx}"
+  },
   "private": false,
   "author": "Stefan Pauka",
   "license": "MIT",
