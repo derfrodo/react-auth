@@ -5,7 +5,7 @@ import {
     authActionCreators,
     useAuthReducerContextDispatch,
 } from "../Auth/reducer";
-import useAuthState from "../hooks/useAuthState";
+import { useAuthState } from "../hooks/useAuthState";
 import useStatefulAuthService from "../hooks/useStatefulAuthService";
 
 export const AuthPopupCallback: React.FC<{

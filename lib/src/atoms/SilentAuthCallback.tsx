@@ -1,7 +1,7 @@
 import log from "loglevel";
 import React from "react";
 import { useParams } from "react-router";
-import useAuthState from "../hooks/useAuthState";
+import { useAuthState } from "../hooks/useAuthState";
 import {
     useAuthReducerContextDispatch,
     authActionCreators,
