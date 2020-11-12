@@ -6,7 +6,9 @@ import {
     RemoteUserInfo,
     UserInfo,
 } from "../interfaces/UserInfo";
-import IAuthService from "../interfaces/IAuthService";
+import IAuthService, {
+    SigninRedirectOptions,
+} from "../interfaces/IAuthService";
 
 export type AuthServiceOidcClientConfig = UserManagerSettings;
 
@@ -149,10 +151,7 @@ export class AuthServiceOidcClient implements IAuthService {
         }
     }
 
-    async signinRedirect(options?: {
-        stateString?: string | undefined;
-        promptValue?: undefined | string;
-    }): Promise<void> {
+    async signinRedirect(options?: SigninRedirectOptions): Promise<void> {
         const { stateString, promptValue } = options || {};
         try {
             const result =
