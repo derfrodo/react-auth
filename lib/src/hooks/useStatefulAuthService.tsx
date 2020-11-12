@@ -1,13 +1,17 @@
 import React, { useMemo } from "react";
+import { DEFAULT_AUTH_PROVIDER_NAME } from "..";
 import { useAuthReducerContextState } from "../Auth/reducer";
 import IAuthService from "../interfaces/IAuthService";
 
 export const useStatefulAuthService = (
-    provider: string | undefined | null
+    provider?: string | undefined | null
 ): IAuthService | undefined => {
     const { services } = useAuthReducerContextState();
     const service = useMemo(
-        () => (provider && services ? services[provider] : undefined),
+        () =>
+            services
+                ? services[provider ?? DEFAULT_AUTH_PROVIDER_NAME]
+                : undefined,
         [provider, services]
     );
     const authService = service ?? undefined;

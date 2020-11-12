@@ -6,7 +6,7 @@ export interface IAuthService {
     getAccessToken(forceRefresh?: boolean): Promise<string | null>;
     clearUser(): Promise<void>;
     signinSilent(): Promise<RemoteUserInfo | null>;
-    signinRedirect(options: {
+    signinRedirect(options?: {
         stateString?: string | undefined;
         promptValue?: undefined | string;
     }): Promise<void>;
