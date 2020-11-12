@@ -149,13 +149,11 @@ export class AuthServiceOidcClient implements IAuthService {
         }
     }
 
-    async signinRedirect({
-        stateString,
-        promptValue,
-    }: {
+    async signinRedirect(options?: {
         stateString?: string | undefined;
         promptValue?: undefined | string;
     }): Promise<void> {
+        const { stateString, promptValue } = options || {};
         try {
             const result =
                 typeof promptValue !== "undefined"
