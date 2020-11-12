@@ -1,8 +1,11 @@
 import { PathHelper } from "@derfrodo/frodo-s-little-helpers/dist";
 import { useMemo } from "react";
 import { useOrigin } from "..";
+import { DEFAULT_AUTH_PROVIDER_NAME } from "../../constants";
 
-export const useCreateAuthUrisForProvider = (provider: string = "basic") => {
+export const useCreateAuthUrisForProvider = (
+    provider: string = DEFAULT_AUTH_PROVIDER_NAME
+) => {
     const origin = useOrigin();
     return useMemo(() => {
         const shelper = new PathHelper();

@@ -7,8 +7,10 @@ export interface AuthState {
     path: string;
 }
 
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const useAuthState = () => {
     const h = useHistory();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isAuthState = React.useCallback((state: any): state is AuthState => {
         if (typeof state === "object") {
             try {
@@ -23,6 +25,7 @@ export const useAuthState = () => {
     }, []);
 
     const parseAuthState = React.useCallback(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         (state: any) => {
             if (typeof state === "string") {
                 try {

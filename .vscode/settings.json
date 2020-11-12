@@ -1,0 +1,4 @@
+{
+"eslint.lintTask.options": "--config ./lib/.eslintrc.json",
+"typescript.tsdk": "node_modules\\typescript\\lib"
+}
