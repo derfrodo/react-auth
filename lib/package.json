@@ -1,6 +1,6 @@
 {
     "name": "@derfrodo/react-auth",
-    "version": "0.0.2-beta",
+    "version": "0.0.3-beta",
     "description": "Awesome things will happen here (2)",
     "main": "dist/index.js",
     "repository": {
