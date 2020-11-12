@@ -10,7 +10,7 @@ import useStatefulAuthService from "../hooks/useStatefulAuthService";
 
 export const AuthPopupCallback: React.FC<{
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (error: any) => any;
+    onError?: (error: any) => any;
     children?: React.ReactNode;
 }> = ({ onError, children }) => {
     const { provider } = useParams<{ provider: string | undefined }>();
@@ -40,7 +40,9 @@ export const AuthPopupCallback: React.FC<{
             } catch (err) {
                 // not signed in
                 log.error("Failed to signin silently", err);
-                onError(err);
+                if (onError) {
+                    onError(err);
+                }
             }
         })();
     }, [dispatch, loggedIn, onError, provider, redirectToStatePath, service]);

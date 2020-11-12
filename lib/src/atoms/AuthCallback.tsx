@@ -9,7 +9,7 @@ import useStatefulAuthService from "../hooks/useStatefulAuthService";
 
 export const AuthCallback: React.FC<{
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (error: any) => any;
+    onError?: (error: any) => any;
     children?: React.ReactNode;
 }> = ({ onError, children }) => {
     const { provider } = useParams<{ provider: string | undefined }>();
@@ -40,7 +40,9 @@ export const AuthCallback: React.FC<{
             } catch (err) {
                 // not signed in
                 log.error(err);
-                onError(err);
+                if (onError) {
+                    onError(err);
+                }
             }
         })();
     }, [onError, dispatch, h, loggedIn, provider, service]);

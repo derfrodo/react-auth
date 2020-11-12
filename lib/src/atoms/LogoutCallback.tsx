@@ -5,7 +5,7 @@ import { useAuthState } from "../hooks/useAuthState";
 import useStatefulAuthService from "../hooks/useStatefulAuthService";
 
 export const LogoutCallback: React.FC<{
-    onError: (error: any) => any;
+    onError?: (error: any) => any;
     children?: React.ReactNode;
 }> = ({ onError, children }) => {
     const { provider } = useParams<{ provider: string | undefined }>();
