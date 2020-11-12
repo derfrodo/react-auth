@@ -23,6 +23,7 @@ export type AuthReducerActionsExtended =
       };
 
 export const isAuthReducerActionsExtended = (
+    // eslint-disable-next-line
     item: any
 ): item is AuthReducerActionsExtended => {
     if (!item) {

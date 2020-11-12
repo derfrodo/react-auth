@@ -11,6 +11,7 @@ import IAuthService from "../interfaces/IAuthService";
 export type AuthServiceOidcClientConfig = UserManagerSettings;
 
 export class AuthServiceOidcClient implements IAuthService {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private _userManager: UserManager = {} as any;
     private _isInitialized = false;
 
@@ -18,17 +19,18 @@ export class AuthServiceOidcClient implements IAuthService {
 
     constructor(
         private _userManagerSettings: AuthServiceOidcClientConfig,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         private onUserMayHasChanged: (user?: UserInfo | undefined | null) => any
     ) {
         doBindPrototype(this, AuthServiceOidcClient.prototype);
         this._userManager = this.getUserManager(this._userManagerSettings);
     }
 
-    get userManagerSettings() {
+    get userManagerSettings(): AuthServiceOidcClientConfig {
         return this._userManagerSettings;
     }
 
-    get userManager() {
+    get userManager(): UserManager {
         return this._userManager;
     }
 
@@ -74,7 +76,7 @@ export class AuthServiceOidcClient implements IAuthService {
         }
     }
 
-    verifyIsInitialized() {
+    verifyIsInitialized(): void {
         if (!this._isInitialized) {
             log.error(
                 "Auth service has been tried to be used before being initialized."
@@ -99,7 +101,7 @@ export class AuthServiceOidcClient implements IAuthService {
         this.callOnUserMayHasChanged();
     }
 
-    async signinSilent() {
+    async signinSilent(): Promise<RemoteUserInfo | null> {
         this.verifyIsInitialized();
         try {
             if (this.renewingSilently) {
@@ -111,6 +113,7 @@ export class AuthServiceOidcClient implements IAuthService {
             const idp = currentUser?.idTokenClaims.idp;
             const sub = currentUser?.idTokenClaims.sub;
             const name = currentUser?.idTokenClaims.name;
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const sid = (currentUser?.idTokenClaims as any).sid;
             const args =
                 idp && typeof idp === "string" && sub && typeof sub === "string"
@@ -170,7 +173,9 @@ export class AuthServiceOidcClient implements IAuthService {
         }
     }
 
-    async signoutRedirect(stateString: string | undefined = undefined) {
+    async signoutRedirect(
+        stateString: string | undefined = undefined
+    ): Promise<void> {
         try {
             await this._userManager.revokeAccessToken();
         } catch (err) {
@@ -189,7 +194,7 @@ export class AuthServiceOidcClient implements IAuthService {
         await this.callOnUserMayHasChanged();
     }
 
-    async logoutCallback() {
+    async logoutCallback(): Promise<void> {
         try {
             const r = await this.userManager.signoutCallback();
             await this.callOnUserMayHasChanged();
@@ -227,9 +232,7 @@ export class AuthServiceOidcClient implements IAuthService {
         }
     }
 
-    async getAccessToken(
-        forceRefresh = false
-    ): Promise<string | null> {
+    async getAccessToken(forceRefresh = false): Promise<string | null> {
         if (forceRefresh) {
             try {
                 await this.signinSilent();

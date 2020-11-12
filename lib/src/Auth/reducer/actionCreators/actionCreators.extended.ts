@@ -38,6 +38,7 @@ export const extendedActionCreators = {
 };
 
 type ActionCreator = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key in string]: (...params: any[]) => ExtenedReducerAction;
 };
 

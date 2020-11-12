@@ -2,7 +2,10 @@ import { OidcMetadata } from "oidc-client";
 import { useCallback } from "react";
 
 export type CreateMetaDataResult = Partial<OidcMetadata>;
-export const useCreateMetaData = () => {
+export const useCreateMetaData = (): ((
+    metadataUrl: string,
+    overwritingMetaData?: Partial<OidcMetadata>
+) => Promise<CreateMetaDataResult>) => {
     return useCallback<
         (
             metadataUrl: string,

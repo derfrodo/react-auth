@@ -32,7 +32,7 @@ export const useCreateAuthServiceOidcClientConfigSettings = (
                 ...config,
             };
         },
-        []
+        [authRoutes]
     );
     return result;
 };
