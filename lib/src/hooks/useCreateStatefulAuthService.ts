@@ -5,6 +5,7 @@ import {
     IAuthService,
     useAuthReducerContextDispatch,
 } from "..";
+import { useAuthReducerContext } from "../Auth";
 import { DEFAULT_AUTH_PROVIDER_NAME } from "../constants";
 import { UserInfo } from "../interfaces/UserInfo";
 import {
@@ -25,7 +26,9 @@ export const useCreateStatefulAuthService = (
 ): ((
     authenticationSettings: AuthServiceOidcClientConfig | null | undefined
 ) => IAuthService | null | undefined) => {
-    const dispatch = useAuthReducerContextDispatch();
+    const { state, dispatch } = useAuthReducerContext();
+    const { services } = state;
+    const currentService = services && services[provider];
     return React.useCallback(
         (
             authenticationSettings:
@@ -33,6 +36,13 @@ export const useCreateStatefulAuthService = (
                 | null
                 | undefined
         ) => {
+            if (currentService) {
+                log.debug(
+                    `There is a service already initialized for provider "${provider}". We might want to dispose the current auth service`,
+                    { currentService }
+                );
+            }
+
             if (
                 authenticationSettings === undefined ||
                 authenticationSettings === null
